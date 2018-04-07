@@ -138,7 +138,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 				sel.unregister(i)
 				taskmap[i].close()
 				del_list.append(i)
-		# print('To delete', len(del_list))
+		if len(del_list)==0: print('BAD')
 		for i in del_list:
 			del taskmap[i]
 
