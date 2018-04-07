@@ -98,9 +98,10 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			else:
 				if len(taskmap)==0: exit()
 				break
-		if time.time() > last + 1:
+		timing=time.time()-last
+		if timing>1:
+			print('Doing per second', (len(task_counter) - lastres)/timing, 'working', len(taskmap), 'totally', len(task_counter))
 			last = time.time()
-			print('Done in last second', len(task_counter) - lastres, 'working', len(taskmap), 'totally', len(task_counter))
 			lastres = len(task_counter)
 		for key, event in events:
 			if event not in [1,4]:
