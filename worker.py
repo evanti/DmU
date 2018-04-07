@@ -22,7 +22,7 @@ def gen_hosts(f_0):
 			try:
 				yield next(zzz)
 			except StopIteration: break
-target=gen_hosts(5)
+target=gen_hosts(179)
 # target=iter([('127.0.0.1', 9050)])
 # counter=0
 # while 1:
@@ -48,7 +48,8 @@ def worker():
 
 
 	try:
-		s.connect(tartg)
+		# s.connect(tartg)
+		pass
 	except BlockingIOError:
 		pass
 	except Exception as e:

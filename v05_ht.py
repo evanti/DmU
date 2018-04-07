@@ -87,8 +87,8 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		'''Main loop'''
 		while 1:
 			events=ready()
-			if not events and len(taskmap)<max_work and still_working:
-				for i in range(100000):
+			if not events and still_working:
+				for i in range(200000):
 					res=add_new_task()
 					if res=='Exhausted':
 						still_working=False
@@ -166,10 +166,10 @@ eff_list=manager.list()
 
 def mainloop():
 	global p_success_list
-	maximum_workers = 500000
+	maximum_workers = 1000000
 	attack_chunk=1
 	cycles = 50000  # before respawning processes
-	conc_proc = 2  # concurrent processes
+	conc_proc = 1  # concurrent processes
 	repetitions=1 # NUMBER OF PROCESS RESPAWNS
 
 
