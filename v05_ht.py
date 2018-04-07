@@ -169,7 +169,7 @@ def mainloop():
 	maximum_workers = 500000
 	attack_chunk=1
 	cycles = 50000  # before respawning processes
-	conc_proc = 1  # concurrent processes
+	conc_proc = 2  # concurrent processes
 	repetitions=1 # NUMBER OF PROCESS RESPAWNS
 
 
