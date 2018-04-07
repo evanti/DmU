@@ -87,13 +87,13 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		'''Main loop'''
 		while 1:
 			if not ready() and len(taskmap)<max_work and still_working:
-				res=add_new_task()
-				if res=='Exhausted':
-					print('here')
-					still_working=False
-					break
-				elif res=='Retry':
-					break
+				for i in range(10):
+					res=add_new_task()
+					if res=='Exhausted':
+						still_working=False
+						break
+					elif res=='Retry':
+						break
 			else:
 				if len(taskmap)==0: exit()
 				break
