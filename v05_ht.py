@@ -72,7 +72,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 
 	def ready():
 		ready=sel.poll(0)
-		print('bad')
+		if not ready: print('bad')
 		return ready
 
 	''' First the setup '''
