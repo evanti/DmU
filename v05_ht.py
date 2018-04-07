@@ -72,7 +72,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 
 	def ready():
 		ready=sel.poll(0)
-		if ready: print('good')
+		if not ready: print('bad')
 		return ready
 
 	''' First the setup '''
@@ -88,7 +88,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		while 1:
 			events=ready()
 			if not events and len(taskmap)<max_work and still_working:
-				for i in range(50000):
+				for i in range(100000):
 					res=add_new_task()
 					if res=='Exhausted':
 						still_working=False
