@@ -7,7 +7,7 @@ socks51=b'\x05\x01\x00'
 def gen_hosts(f_0):
 	a=[x for x in range(1)]
 	shuffle(a)
-	b=[x for x in range(1)]
+	b=[x for x in range(256)]
 	shuffle(b)
 	c=[x for x in range(256)]
 	shuffle(c)
