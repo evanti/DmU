@@ -49,6 +49,7 @@ def showstats(taskdict):
 
 def process(max_work, attack_chunk, attack_timeout, cycles_num):
 	still_working=True
+	first=time.time()
 	def add_new_task():
 		try:
 			s=socket.socket()
@@ -131,7 +132,8 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			attacklist.clear()
 
 		'''Gagbage cleaning'''
-		if len(task_counter) % 1000 == 0:
+		if time.time()>=first+3:
+			first=time.time()
 			now = int(time.time())
 			del_list=[]
 			for i in taskmap:
@@ -160,7 +162,7 @@ eff_list=manager.list()
 
 def mainloop():
 	global p_success_list
-	maximum_workers = 5000
+	maximum_workers = 500000
 	attack_chunk=1
 	cycles = 50000  # before respawning processes
 	conc_proc = 1  # concurrent processes
