@@ -91,7 +91,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 					res=add_new_task()
 					if time.time() > last + 1:
 						last = time.time()
-						print('Done in last second', len(task_counter) - lastres)
+						print('Done in last second', len(task_counter) - lastres, 'working', len(taskmap))
 						lastres = len(task_counter)
 					if res=='Exhausted':
 						still_working=False
