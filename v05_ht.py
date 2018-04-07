@@ -87,7 +87,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		'''Main loop'''
 		while 1:
 			if not ready() and len(taskmap)<max_work and still_working:
-				for i in range(10):
+				for i in range(1):
 					res=add_new_task()
 					if time.time() > last + 1:
 						last = time.time()
@@ -168,7 +168,7 @@ def mainloop():
 	maximum_workers = 500000
 	attack_chunk=1
 	cycles = 50000  # before respawning processes
-	conc_proc = 1  # concurrent processes
+	conc_proc = 4  # concurrent processes
 	repetitions=1 # NUMBER OF PROCESS RESPAWNS
 
 
