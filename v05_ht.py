@@ -62,8 +62,8 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			taskmap[s.fileno()]=a
 			task_counter.append(1)
 			if len(task_counter)%1000==0:
-				print('Currently working', len(taskmap))
-				# print('Total tasks', len(task_counter))
+				# print('Currently working', len(taskmap))
+				print('Total tasks', len(task_counter))
 			return True
 		if not a.stillworking:
 			return 'Exhausted'
@@ -131,16 +131,17 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			attacklist.clear()
 
 		'''Gagbage cleaning'''
-		now = int(time.time())
-		del_list=[]
-		for i in taskmap:
-			if taskmap[i].ttime and taskmap[i].ttime < now:
-				sel.unregister(i)
-				taskmap[i].close()
-				del_list.append(i)
-		if len(del_list)!=0: print('BAD', len(del_list))
-		for i in del_list:
-			del taskmap[i]
+		if len(task_counter) % 1000 == 0:
+			now = int(time.time())
+			del_list=[]
+			for i in taskmap:
+				if taskmap[i].ttime and taskmap[i].ttime < now:
+					sel.unregister(i)
+					taskmap[i].close()
+					del_list.append(i)
+			if len(del_list)==0: print('BAD', len(del_list))
+			for i in del_list:
+				del taskmap[i]
 
 
 def attack(strikelist):
