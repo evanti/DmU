@@ -63,7 +63,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			task_counter.append(1)
 			if len(task_counter)%1000==0:
 				# print('Currently working', len(taskmap))
-				print('Total tasks', len(task_counter))
+				print('Total tasks', len(task_counter), len(taskmap))
 			return True
 		if not a.stillworking:
 			return 'Exhausted'
@@ -160,7 +160,7 @@ eff_list=manager.list()
 
 def mainloop():
 	global p_success_list
-	maximum_workers = 500000
+	maximum_workers = 5000
 	attack_chunk=1
 	cycles = 50000  # before respawning processes
 	conc_proc = 1  # concurrent processes
@@ -193,7 +193,4 @@ def mainloop():
 
 
 if __name__=='__main__':
-	try:
-		mainloop()
-	except KeyboardInterrupt:
-		gc.collect(2)
+	mainloop()
