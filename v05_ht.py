@@ -88,7 +88,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		while 1:
 			events=ready()
 			if not events and len(taskmap)<max_work and still_working:
-				for i in range(20000):
+				for i in range(200):
 					res=add_new_task()
 					if res=='Exhausted':
 						still_working=False
@@ -100,7 +100,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 				break
 		timing=time.time()-last
 		if timing>1:
-			print('Doing per second', (len(task_counter) - lastres)/timing, 'working', len(taskmap), 'totally', len(task_counter))
+			print('Doing per second', int((len(task_counter) - lastres)/timing), 'working', len(taskmap), 'totally', len(task_counter))
 			last = time.time()
 			lastres = len(task_counter)
 		for key, event in events:
