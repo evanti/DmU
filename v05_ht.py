@@ -62,7 +62,8 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			taskmap[s.fileno()]=a
 			task_counter.append(1)
 			if len(task_counter)%1000==0:
-				print('Total tasks', len(task_counter))
+				print('Currently working', len(taskmap))
+				# print('Total tasks', len(task_counter))
 			return True
 		if not a.stillworking:
 			return 'Exhausted'

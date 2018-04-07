@@ -55,7 +55,6 @@ def worker():
 		print(31, str(e))
 		yield ('fin', 0)
 	yield ('start', 4, 3)
-	print('returned')
 	try:
 		s.sendall(socks51)
 	except Exception as e:
