@@ -95,6 +95,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 						break
 					elif res=='Retry':
 						break
+				print(time.time()-first)
 			else:
 				if len(taskmap)==0: exit()
 				break
