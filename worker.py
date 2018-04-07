@@ -7,11 +7,11 @@ socks51=b'\x05\x01\x00'
 def gen_hosts(f_0):
 	a=[x for x in range(1)]
 	shuffle(a)
-	b=[x for x in range(256)]
+	b=[x for x in range(1)]
 	shuffle(b)
 	c=[x for x in range(256)]
 	shuffle(c)
-	ports = [8088, 8888, 3128, 33555, 61177, 8060, 31544, 1080, 8080, 61234, 35618, 53281, 20183, 33012, 39880, 8081, 9999, 65000, 9050]
+	ports = [8088, 8888, 3128, 33555, 9050, 61177, 8060, 31544, 1080, 8080, 61234, 35618, 53281, 20183, 33012, 39880, 8081, 9999, 65000]
 	q=itertools.product(a,b,c)
 	while 1:
 		try:
@@ -22,8 +22,8 @@ def gen_hosts(f_0):
 			try:
 				yield next(zzz)
 			except StopIteration: break
-target=gen_hosts(120)
-
+target=gen_hosts(127)
+# target=iter([('127.0.0.1', 9050)])
 # counter=0
 # while 1:
 # 	try:
@@ -38,7 +38,7 @@ def worker():
 	### INDIVIDUAL PARAMETERS ###
 	try:
 		tartg = next(target)
-		print(tartg)
+		# print(tartg)
 		s=yield True
 	except StopIteration:
 		print('out of addresses')
@@ -55,7 +55,7 @@ def worker():
 		print(31, str(e))
 		yield ('fin', 0)
 	yield ('start', 4, 3)
-
+	print('returned')
 	try:
 		s.sendall(socks51)
 	except Exception as e:

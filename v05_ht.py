@@ -58,8 +58,10 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			return False
 		a = Task(s)
 		if a.stillworking and a.status:
-			sel.register(s.fileno(), 2)#select.EPOLLOUT | select.EPOLLET)
+			sel.register(s.fileno(), 4)# select.EPOLLOUT | select.EPOLLET)
 			taskmap[s.fileno()]=a
+			task_counter.append(1)
+			print('Total tasks', len(task_counter))
 			return True
 		if not a.stillworking:
 			return 'Exhausted'
@@ -67,12 +69,12 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			return 'Retry'
 
 	def ready():
-		ready=sel.select(0)
+		ready=sel.poll(0)
 		return ready
 
 	''' First the setup '''
-	# sel = select.epoll()
-	sel=selectors.DefaultSelector()
+	sel = select.epoll()
+	# sel=selectors.DefaultSelector()
 	taskmap = {}
 	attacklist=[]
 	k=0
@@ -85,6 +87,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			if not ready() and len(taskmap)<max_work and still_working:
 				res=add_new_task()
 				if res=='Exhausted':
+					print('here')
 					still_working=False
 					break
 				elif res=='Retry':
@@ -94,34 +97,33 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 				break
 
 		for key, event in ready():
-			if event not in [1,2]:
-				sel.unregister(key.fd)
-				taskmap[key.fd].target.close()
-				del taskmap[key.fd]
+			if event not in [1,4]:
+				sel.unregister(key)
+				taskmap[key].target.close()
+				del taskmap[key]
 				continue
-			res = taskmap[key.fd].run()
+			res = taskmap[key].run()
 			if res[0]=='mask':
-				sel.modify(key.fd, res[1])
-				taskmap[key.fd].ttime=int(time.time()+res[2])
-			# print('Time set', taskmap[key.fd].ttime)
+				sel.modify(key, res[1])
+				taskmap[key].ttime=int(time.time()+res[2])
+			# print('Time set', taskmap[key].ttime)
 			elif res[0]=='fin':
-				sel.unregister(key.fd)
-				taskmap[key.fd].close()
-				del taskmap[key.fd]
+				sel.unregister(key)
+				taskmap[key].close()
+				del taskmap[key]
 				continue
 			elif res[0]=='ready':
-				sel.unregister(key.fd)
+				sel.unregister(key)
 				attacklist.append(res[1])
-				taskmap[key.fd].close()
-				del taskmap[key.fd]
+				taskmap[key].close()
+				del taskmap[key]
 
 		'''Attack launcher'''
 		if len(attacklist)>=attack_chunk:
 
 			p1 = Process(target=attack, args=(attacklist,))
 			p1.start()
-			showstats(taskmap)
-			print("Attack launched", len(attacklist))
+			# showstats(taskmap)
 			p_success_list.append(len(attacklist))
 
 			attacklist.clear()
@@ -150,13 +152,14 @@ def attack(strikelist):
 
 manager = Manager()
 p_success_list=manager.list()
+task_counter=manager.list()
 eff_list=manager.list()
 
 def mainloop():
 	global p_success_list
-	maximum_workers = 150
+	maximum_workers = 50000
 	attack_chunk=1
-	cycles = 50  # before respawning processes
+	cycles = 50000  # before respawning processes
 	conc_proc = 1  # concurrent processes
 	repetitions=1 # NUMBER OF PROCESS RESPAWNS
 
