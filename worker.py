@@ -24,14 +24,14 @@ def gen_hosts(f_0):
 			except StopIteration: break
 target=gen_hosts(178)
 # target=iter([('127.0.0.1', 9050)])
-# counter=0
-# while 1:
-# 	try:
-# 		print(next(target))
-# 		counter+=1
-# 	except StopIteration:
-# 		print(counter)
-# 		break
+counter=0
+while 1:
+	try:
+		print(next(target))
+		counter+=1
+	except StopIteration:
+		print(counter)
+		break
 
 
 def worker():
@@ -48,8 +48,8 @@ def worker():
 
 
 	try:
-		s.connect(tartg)
-		# pass
+		# s.connect(tartg)
+		pass
 	except BlockingIOError:
 		pass
 	except Exception as e:
