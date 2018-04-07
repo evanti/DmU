@@ -88,21 +88,20 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		while 1:
 			events=ready()
 			if not events and len(taskmap)<max_work and still_working:
-				for i in range(10000):
+				for i in range(20000):
 					res=add_new_task()
 					if res=='Exhausted':
 						still_working=False
 						break
 					elif res=='Retry':
 						break
-				if time.time() > last + 1:
-					last = time.time()
-					print('Done in last second', len(task_counter) - lastres, 'working', len(taskmap), 'totally', len(task_counter))
-					lastres = len(task_counter)
 			else:
 				if len(taskmap)==0: exit()
 				break
-
+		if time.time() > last + 1:
+			last = time.time()
+			print('Done in last second', len(task_counter) - lastres, 'working', len(taskmap), 'totally', len(task_counter))
+			lastres = len(task_counter)
 		for key, event in events:
 			if event not in [1,4]:
 				sel.unregister(key)
