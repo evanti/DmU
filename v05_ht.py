@@ -61,7 +61,8 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			sel.register(s.fileno(), 4)# select.EPOLLOUT | select.EPOLLET)
 			taskmap[s.fileno()]=a
 			task_counter.append(1)
-			print('Total tasks', len(task_counter))
+			if len(task_counter)%1000==0:
+				print('Total tasks', len(task_counter))
 			return True
 		if not a.stillworking:
 			return 'Exhausted'
@@ -157,7 +158,7 @@ eff_list=manager.list()
 
 def mainloop():
 	global p_success_list
-	maximum_workers = 50000
+	maximum_workers = 500000
 	attack_chunk=1
 	cycles = 50000  # before respawning processes
 	conc_proc = 1  # concurrent processes
