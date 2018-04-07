@@ -88,7 +88,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		while 1:
 			events=ready()
 			if not events and still_working:
-				for i in range(200000):
+				for i in range(655360):
 					res=add_new_task()
 					if res=='Exhausted':
 						still_working=False
