@@ -97,7 +97,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 						break
 				if time.time() > last + 1:
 					last = time.time()
-					print('Done in last second', len(task_counter) - lastres, 'working', len(taskmap))
+					print('Done in last second', len(task_counter) - lastres, 'working', len(taskmap), 'totally', len(task_counter))
 					lastres = len(task_counter)
 			else:
 				if len(taskmap)==0: exit()
