@@ -82,7 +82,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 	k=0
 
 	'''Now execution'''
-	while k<cycles_num:
+	while 1:
 
 		'''Main loop'''
 		while 1:
