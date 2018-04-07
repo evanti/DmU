@@ -48,8 +48,8 @@ def worker():
 
 
 	try:
-		# s.connect(tartg)
-		pass
+		s.connect(tartg)
+		# pass
 	except BlockingIOError:
 		pass
 	except Exception as e:
