@@ -87,7 +87,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 		'''Main loop'''
 		while 1:
 			if not ready() and len(taskmap)<max_work and still_working:
-				for i in range(1):
+				for i in range(10000):
 					res=add_new_task()
 					if time.time() > last + 1:
 						last = time.time()
