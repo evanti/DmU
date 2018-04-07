@@ -86,7 +86,8 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 
 		'''Main loop'''
 		while 1:
-			if not ready() and len(taskmap)<max_work and still_working:
+			ready=ready()
+			if not ready and len(taskmap)<max_work and still_working:
 				for i in range(10000):
 					res=add_new_task()
 					if time.time() > last + 1:
@@ -102,7 +103,7 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 				if len(taskmap)==0: exit()
 				break
 
-		for key, event in ready():
+		for key, event in ready:
 			if event not in [1,4]:
 				sel.unregister(key)
 				taskmap[key].target.close()

@@ -22,7 +22,7 @@ def gen_hosts(f_0):
 			try:
 				yield next(zzz)
 			except StopIteration: break
-target=gen_hosts(120)
+target=gen_hosts(67)
 # target=iter([('127.0.0.1', 9050)])
 # counter=0
 # while 1:
