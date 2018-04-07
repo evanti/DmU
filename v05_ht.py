@@ -50,6 +50,8 @@ def showstats(taskdict):
 def process(max_work, attack_chunk, attack_timeout, cycles_num):
 	still_working=True
 	first=time.time()
+	last=time.time()
+	lastres=0
 	def add_new_task():
 		try:
 			s=socket.socket()
@@ -62,9 +64,6 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			sel.register(s.fileno(), 4)# select.EPOLLOUT | select.EPOLLET)
 			taskmap[s.fileno()]=a
 			task_counter.append(1)
-			if len(task_counter)%1000==0:
-				# print('Currently working', len(taskmap))
-				print('Total tasks', len(task_counter), len(taskmap))
 			return True
 		if not a.stillworking:
 			return 'Exhausted'
@@ -90,6 +89,10 @@ def process(max_work, attack_chunk, attack_timeout, cycles_num):
 			if not ready() and len(taskmap)<max_work and still_working:
 				for i in range(10):
 					res=add_new_task()
+					if time.time() > last + 1:
+						last = time.time()
+						print('Done in last second', len(task_counter) - lastres)
+						lastres = len(task_counter)
 					if res=='Exhausted':
 						still_working=False
 						break
