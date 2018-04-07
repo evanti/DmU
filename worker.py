@@ -11,7 +11,7 @@ def gen_hosts(f_0):
 	shuffle(b)
 	c=[x for x in range(256)]
 	shuffle(c)
-	ports = [8088, 8888, 3128, 33555, 9050, 61177, 8060, 31544, 1080, 8080, 61234, 35618, 53281, 20183, 33012, 39880, 8081, 9999, 65000]
+	ports = [8088, 8888, 3128, 9050,  8060, 1080, 8080, 8081, 9999, 65000]
 	q=itertools.product(a,b,c)
 	while 1:
 		try:
@@ -22,7 +22,7 @@ def gen_hosts(f_0):
 			try:
 				yield next(zzz)
 			except StopIteration: break
-target=gen_hosts(179)
+target=gen_hosts(178)
 # target=iter([('127.0.0.1', 9050)])
 # counter=0
 # while 1:
@@ -48,8 +48,8 @@ def worker():
 
 
 	try:
-		# s.connect(tartg)
-		pass
+		s.connect(tartg)
+		# pass
 	except BlockingIOError:
 		pass
 	except Exception as e:
